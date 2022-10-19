@@ -6,7 +6,10 @@
     @Imagen1.Name
   </div>
 
-
+  @if (Imagen1.Base64Image != null)
+  {
+    <img src="data:image/png;base64, @Imagen1.Base64Image" class="card-img-top" alt="@Imagen1.Name">
+  }
 
   <div class="card-body">
     @if (Imagen1.ClassificationResult != null)
