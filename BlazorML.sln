@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreadorDeModelo", "ModelBuilder\CreadorDeModelo.csproj", "{89253E7C-9131-4147-8828-98DDB2FC1AAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClienteWebAppIdentificador", "BlazorClient\ClienteWebAppIdentificador.csproj", "{0E2E3AF3-5F0C-497D-BE9A-B4353E90B6C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClienteWebAppIdentificador", "ClienteWebAppIdentificador.csproj", "{0E2E3AF3-5F0C-497D-BE9A-B4353E90B6C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
