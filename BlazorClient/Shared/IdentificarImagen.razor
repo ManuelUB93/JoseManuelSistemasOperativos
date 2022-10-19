@@ -1,0 +1,63 @@
+@using IdentificadorWeb.Data
+@inject ServicioClasificador _Serv
+
+<div class="card mb-2">
+  <div class="card-header">
+    @Imagen1.Name
+  </div>
+
+  @if (Imagen1.Base64Image != null)
+  {
+    <img src="data:image/png;base64, @Imagen1.Base64Image" class="card-img-top" alt="@Imagen1.Name">
+  }
+
+  <div class="card-body">
+    @if (Imagen1.ClassificationResult != null)
+    {
+      <p class="card-text">
+        @if (Imagen1.ClassificationResult.Probabilidad > 0.7)
+        {
+          <i class="text-success oi oi-circle-check"> </i>
+        }
+        else
+        {
+          <i class="text-danger oi oi-warning"> </i>
+        }
+         <strong> @Imagen1.ClassificationResult.Nombre</strong> con <strong>@Imagen1.ClassificationResult.Probabilidad</strong> % de probabilidad
+      </p>
+      <p class="card-text">
+        <button class="btn btn-secondary" @onclick="TriggerOnClear">Clear</button>
+      </p>
+    }
+    else
+    {
+      <p class="card-text text-center my-2">
+        <div class="loader-icon">Cargando...</div>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" style="width: @Imagen1.UploadedPercentage%" aria-valuenow="@Imagen1.UploadedPercentage" aria-valuemin="0" aria-valuemax="100"/>
+        </div>
+      </p>
+    }
+  </div>
+</div>
+
+@code {
+    [Parameter]
+    public ImagenSeleccionada Imagen1 { get; set; }
+
+    [Parameter]
+    public EventCallback<ImagenSeleccionada> OnClear { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Imagen1.ClassificationResult != null) return;
+        using(var Imagen = await Imagen1.Upload(() => InvokeAsync(StateHasChanged)))
+        {
+          Imagen1.ClassificationResult = _Serv.Classify(Imagen);
+        }
+    }
+    async Task TriggerOnClear()
+    {
+        await OnClear.InvokeAsync(Imagen1);
+    }
+}

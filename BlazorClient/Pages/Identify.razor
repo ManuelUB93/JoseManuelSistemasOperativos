@@ -1,0 +1,38 @@
+@page "/"
+
+
+<div class="container">
+  <h1>Identificador de Imagenes</h1>
+
+  <p>
+    Selecciona una imagen y deja que la inteligencia artificial te diga que es
+  </p>
+  <form>
+    <InputFile multiple OnChange="OnImageFileSelected" accept="image/*"/>
+  </form>
+
+  <div class="row my-4">
+    @foreach (var Imagen in ListaImagenes)
+    {
+      <div class="col-4">  
+        <IdentificarImagen @key="Imagen" Imagen1="Imagen" OnClear="OnClear" />
+      </div>
+    }
+  </div>
+</div>
+
+
+@code {
+    List<ImagenSeleccionada> ListaImagenes = new List<ImagenSeleccionada>();
+
+    void OnImageFileSelected(InputFileChangeEventArgs files)
+    {
+        ListaImagenes.AddRange(
+          files.GetMultipleFiles(10).Select(f => new ImagenSeleccionada(f)));
+    }
+
+    void OnClear(ImagenSeleccionada image)
+    {
+        ListaImagenes.Remove(image);
+    }
+}
